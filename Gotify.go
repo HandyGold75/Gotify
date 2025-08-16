@@ -14,13 +14,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/HandyGold75/GOLib/gotify/Categories"
-	"github.com/HandyGold75/GOLib/gotify/Chapters"
-	"github.com/HandyGold75/GOLib/gotify/Genres"
-	"github.com/HandyGold75/GOLib/gotify/Markets"
-	"github.com/HandyGold75/GOLib/gotify/Player"
-	"github.com/HandyGold75/GOLib/gotify/Users"
-	"github.com/HandyGold75/GOLib/gotify/lib"
+	"github.com/HandyGold75/Gotify/Albums"
+	"github.com/HandyGold75/Gotify/Categories"
+	"github.com/HandyGold75/Gotify/Chapters"
+	"github.com/HandyGold75/Gotify/Genres"
+	"github.com/HandyGold75/Gotify/Markets"
+	"github.com/HandyGold75/Gotify/Player"
+	"github.com/HandyGold75/Gotify/Users"
+	"github.com/HandyGold75/Gotify/lib"
 	"golang.org/x/oauth2"
 )
 
@@ -34,7 +35,7 @@ type (
 		authUserMsgCallback func(url string)
 		cl                  *http.Client
 
-		// Albums     Albums.Albums
+		Albums Albums.Albums
 		// Artists    Artists.Artists
 		// Audiobooks Audiobooks.Audiobooks
 		Categories Categories.Categories
@@ -116,7 +117,7 @@ func NewGotifyPlayer(clientID, redirectURL string, scopes ...scope) *GotifyPlaye
 		cl:                  http.DefaultClient,
 	}
 
-	// gp.Albums = Albums.New(gp.SendAlbums)
+	gp.Albums = Albums.New(gp.SendAlbums)
 	// gp.Artists = Artists.New(gp.SendArtists)
 	// gp.Audiobooks = Audiobooks.New(gp.SendAudiobooks)
 	gp.Categories = Categories.New(gp.SendCategories)

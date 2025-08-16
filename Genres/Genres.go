@@ -1,7 +1,7 @@
 package Genres
 
 import (
-	"github.com/HandyGold75/GOLib/gotify/lib"
+	"github.com/HandyGold75/Gotify/lib"
 )
 
 type Genres struct {
