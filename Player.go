@@ -3,7 +3,7 @@ package Gotify
 import (
 	"time"
 
-	"github.com/HandyGold75/GOLib/gotify/lib"
+	"github.com/HandyGold75/Gotify/lib"
 )
 
 func (gp *GotifyPlayer) Play() error                       { return gp.Player.StartResumePlayback(time.Duration(-1)) }

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/HandyGold75/GOLib/gotify/lib"
+	"github.com/HandyGold75/Gotify/lib"
 )
 
 type (
@@ -153,7 +153,6 @@ func (s *Users) GetUsersTopTracks(time lib.TimeRange, limit, offset int) (getUse
 	return data, err
 }
 
-// Scopes:
 func (s *Users) GetUsersProfile(id string) (getUsersProfile, error) {
 	res, err := s.Send(lib.GET, "users/"+id, [][2]string{}, []byte{})
 	if err != nil {
@@ -237,7 +236,6 @@ func (s *Users) CheckIfUserFollowsUsers(ids []string) ([]bool, error) {
 	return data, err
 }
 
-// Scopes:
 func (s *Users) CheckIfCurrentUserFollowsPlaylist(id string) (bool, error) {
 	res, err := s.Send(lib.GET, "playlists/"+id+"/followers/contains", [][2]string{}, []byte{})
 	if err != nil {

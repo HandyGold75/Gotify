@@ -1,4 +1,4 @@
-module github.com/HandyGold75/GOLib/gotify
+module github.com/HandyGold75/Gotify
 
 go 1.25.0
 

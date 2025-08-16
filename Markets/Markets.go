@@ -3,7 +3,7 @@ package Markets
 import (
 	"encoding/json"
 
-	"github.com/HandyGold75/GOLib/gotify/lib"
+	"github.com/HandyGold75/Gotify/lib"
 )
 
 type Markets struct {
