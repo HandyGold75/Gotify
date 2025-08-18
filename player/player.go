@@ -1,11 +1,11 @@
-package Player
+package player
 
 import (
 	"encoding/json"
 	"strconv"
 	"time"
 
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 type (
@@ -28,27 +28,12 @@ type (
 		lib.Actions
 	}
 
-	getAvailableDevices struct{ lib.Devices }
+	getAvailableDevices lib.Devices
 
-	getCurrentlyPlayingTrack struct {
-		lib.Device
-		RepeatState  string `json:"repeat_state"`
-		ShuffleState bool   `json:"shuffle_state"`
-		lib.Context
-		Timestamp            int                       `json:"timestamp"`
-		ProgressMs           int                       `json:"progress_ms"`
-		IsPlaying            bool                      `json:"is_playing"`
-		Item                 lib.TrackAndEpisodeObject `json:"item"`
-		CurrentlyPlayingType string                    `json:"currently_playing_type"`
-		lib.Actions
-	}
+	getCurrentlyPlayingTrack getPlaybackState
 
 	getRecentlyPlayedTracks struct {
-		Href  string `json:"href"`
-		Limit int    `json:"limit"`
-		Next  string `json:"next"`
-		lib.Cursors
-		Total int `json:"total"`
+		lib.ItemsCursorsHeaders
 		Items []struct {
 			lib.Track
 			PlayedAt string `json:"played_at"`

@@ -1,11 +1,11 @@
-package Albums
+package albums
 
 import (
 	"encoding/json"
 	"strconv"
 	"strings"
 
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 type (
@@ -19,23 +19,13 @@ type (
 	getSeveralAlbums lib.Albums
 
 	getAlbumTracks struct {
-		Href     string                  `json:"href"`
-		Limit    int                     `json:"limit"`
-		Next     string                  `json:"next"`
-		Offset   int                     `json:"offset"`
-		Previous string                  `json:"previous"`
-		Total    int                     `json:"total"`
-		Items    []lib.TrackSimpleObject `json:"items"`
+		lib.ItemsHeaders
+		Items []lib.TrackSimpleObject `json:"items"`
 	}
 
 	getUsersSavedAlbums struct {
-		Href     string `json:"href"`
-		Limit    int    `json:"limit"`
-		Next     string `json:"next"`
-		Offset   int    `json:"offset"`
-		Previous string `json:"previous"`
-		Total    int    `json:"total"`
-		Items    []struct {
+		lib.ItemsHeaders
+		Items []struct {
 			AddedAt string `json:"added_at"`
 			lib.Album
 		} `json:"items"`
@@ -43,13 +33,8 @@ type (
 
 	getNewReleases struct {
 		Albums struct {
-			Href     string            `json:"href"`
-			Limit    int               `json:"limit"`
-			Next     string            `json:"next"`
-			Offset   int               `json:"offset"`
-			Previous string            `json:"previous"`
-			Total    int               `json:"total"`
-			Items    []lib.AlbumSimple `json:"items"`
+			lib.ItemsHeaders
+			Items []lib.AlbumSimple `json:"items"`
 		} `json:"albums"`
 	}
 )
