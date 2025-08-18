@@ -28,7 +28,7 @@ func New(send func(method lib.HttpMethod, action string, options [][2]string, bo
 }
 
 func (s *Categories) GetSeveralBrowseCategories(limit, offset int) (getSeveralBrowseCategories, error) {
-	res, err := s.Send(lib.GET, "", [][2]string{{"locale", s.Locale}, {"limit", strconv.Itoa(max(1, min(50, limit)))}, {"offset", strconv.Itoa(max(0, offset))}}, []byte{})
+	res, err := s.Send(lib.GET, "browse/categories", [][2]string{{"locale", s.Locale}, {"limit", strconv.Itoa(max(1, min(50, limit)))}, {"offset", strconv.Itoa(max(0, offset))}}, []byte{})
 	if err != nil {
 		return getSeveralBrowseCategories{}, err
 	}
@@ -38,7 +38,7 @@ func (s *Categories) GetSeveralBrowseCategories(limit, offset int) (getSeveralBr
 }
 
 func (s *Categories) GetSingleBrowseCategory(id string) (getSingleBrowseCategory, error) {
-	res, err := s.Send(lib.GET, id, [][2]string{{"locale", s.Locale}}, []byte{})
+	res, err := s.Send(lib.GET, "browse/categories/"+id, [][2]string{{"locale", s.Locale}}, []byte{})
 	if err != nil {
 		return getSingleBrowseCategory{}, err
 	}

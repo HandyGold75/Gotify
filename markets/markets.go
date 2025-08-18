@@ -15,7 +15,7 @@ func New(send func(method lib.HttpMethod, action string, options [][2]string, bo
 }
 
 func (s *Markets) GetAvailableMarkets() ([]string, error) {
-	res, err := s.Send(lib.GET, "", [][2]string{}, []byte{})
+	res, err := s.Send(lib.GET, "markets", [][2]string{}, []byte{})
 	if err != nil {
 		return []string{}, err
 	}

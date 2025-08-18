@@ -31,7 +31,7 @@ func New(send func(method lib.HttpMethod, action string, options [][2]string, bo
 }
 
 func (s *Artists) GetArtist(id string) (getArtist, error) {
-	res, err := s.Send(lib.GET, id, [][2]string{}, []byte{})
+	res, err := s.Send(lib.GET, "artists/"+id, [][2]string{}, []byte{})
 	if err != nil {
 		return getArtist{}, err
 	}
@@ -41,7 +41,7 @@ func (s *Artists) GetArtist(id string) (getArtist, error) {
 }
 
 func (s *Artists) GetSeveralArtists(ids []string) (getSeveralArtists, error) {
-	res, err := s.Send(lib.GET, "", [][2]string{{"ids", strings.Join(ids, ",")}}, []byte{})
+	res, err := s.Send(lib.GET, "artists", [][2]string{{"ids", strings.Join(ids, ",")}}, []byte{})
 	if err != nil {
 		return getSeveralArtists{}, err
 	}
@@ -55,7 +55,7 @@ func (s *Artists) GetArtistsAlbums(id string, groups []lib.AlbumGroup, limit, of
 	for _, grp := range groups {
 		grps = append(grps, string(grp))
 	}
-	res, err := s.Send(lib.GET, id+"/albums", [][2]string{{"include_groups", strings.Join(grps, ",")}, {"market", s.Market}, {"limit", strconv.Itoa(max(1, min(50, limit)))}, {"offset", strconv.Itoa(max(0, offset))}}, []byte{})
+	res, err := s.Send(lib.GET, "artists/"+id+"/albums", [][2]string{{"include_groups", strings.Join(grps, ",")}, {"market", s.Market}, {"limit", strconv.Itoa(max(1, min(50, limit)))}, {"offset", strconv.Itoa(max(0, offset))}}, []byte{})
 	if err != nil {
 		return getArtistsAlbums{}, err
 	}
@@ -65,7 +65,7 @@ func (s *Artists) GetArtistsAlbums(id string, groups []lib.AlbumGroup, limit, of
 }
 
 func (s *Artists) GetArtistsTopTracks(id string) (getArtistsTopTracks, error) {
-	res, err := s.Send(lib.GET, id+"/top-tracks", [][2]string{{"market", s.Market}}, []byte{})
+	res, err := s.Send(lib.GET, "artists/"+id+"/top-tracks", [][2]string{{"market", s.Market}}, []byte{})
 	if err != nil {
 		return getArtistsTopTracks{}, err
 	}
