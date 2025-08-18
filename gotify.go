@@ -16,6 +16,7 @@ import (
 
 	"github.com/HandyGold75/gotify/albums"
 	"github.com/HandyGold75/gotify/artists"
+	"github.com/HandyGold75/gotify/audiobooks"
 	"github.com/HandyGold75/gotify/categories"
 	"github.com/HandyGold75/gotify/chapters"
 	"github.com/HandyGold75/gotify/genres"
@@ -36,9 +37,9 @@ type (
 		authUserMsgCallback func(url string)
 		cl                  *http.Client
 
-		Albums  albums.Albums
-		Artists artists.Artists
-		// Audiobooks audiobooks.Audiobooks
+		Albums     albums.Albums
+		Artists    artists.Artists
+		Audiobooks audiobooks.Audiobooks
 		Categories categories.Categories
 		Chapters   chapters.Chapters
 		// Episodes   episodes.Episodes
@@ -120,7 +121,7 @@ func NewGotifyPlayer(clientID, redirectURL string, scopes ...scope) *GotifyPlaye
 
 	gp.Albums = albums.New(gp.SendAlbums)
 	gp.Artists = artists.New(gp.SendArtists)
-	// gp.Audiobooks = audiobooks.New(gp.SendAudiobooks)
+	gp.Audiobooks = audiobooks.New(gp.SendAudiobooks)
 	gp.Categories = categories.New(gp.SendCategories)
 	gp.Chapters = chapters.New(gp.SendChapters)
 	// gp.Episodes = episodes.New(gp.SendEpisodes)

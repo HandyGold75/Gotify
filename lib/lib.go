@@ -377,7 +377,7 @@ type (
 		episode
 	}
 
-	audiobook struct {
+	audiobookSimple struct {
 		Authors []struct {
 			Name string `json:"name"`
 		} `json:"authors"`
@@ -402,9 +402,68 @@ type (
 		URI           string `json:"uri"`
 		TotalChapters int    `json:"total_chapters"`
 	}
-	Audiobook struct {
-		Audiobook audiobook `json:"audiobook"`
+	AudiobookSimple struct {
+		Audiobook audiobookSimple `json:"audiobook"`
 	}
+
+	audiobook struct{
+	Authors []struct {
+		Name string `json:"name"`
+	} `json:"authors"`
+	AvailableMarkets []string `json:"available_markets"`
+	copyrights  
+	Description     string `json:"description"`
+	HTMLDescription string `json:"html_description"`
+	Edition         string `json:"edition"`
+	Explicit        bool   `json:"explicit"`
+	externalUrls    
+	Href   string `json:"href"`
+	ID     string `json:"id"`
+	images 
+	Languages []string `json:"languages"`
+	MediaType string   `json:"media_type"`
+	Name      string   `json:"name"`
+	Narrators []struct {
+		Name string `json:"name"`
+	} `json:"narrators"`
+	Publisher     string `json:"publisher"`
+	Type          string `json:"type"`
+	URI           string `json:"uri"`
+	TotalChapters int    `json:"total_chapters"`
+	Chapters      struct {
+		ItemsHeaders
+		Items    []ChapterSimpleObject `json:"items"`
+	} `json:"chapters"`
+	}
+	Audiobooks struct{Audiobooks []audiobook `json:"audiobooks"`}
+	AudiobookObject audiobook
+
+
+
+
+chapterSimple struct{
+		AudioPreviewURL  string   `json:"audio_preview_url"`
+		AvailableMarkets []string `json:"available_markets"`
+		ChapterNumber    int      `json:"chapter_number"`
+		Description      string   `json:"description"`
+		HTMLDescription  string   `json:"html_description"`
+		DurationMs       int      `json:"duration_ms"`
+		Explicit         bool     `json:"explicit"`
+		externalUrls    
+		Href   string `json:"href"`
+		ID     string `json:"id"`
+		images
+		IsPlayable           bool     `json:"is_playable"`
+		Languages            []string `json:"languages"`
+		Name                 string   `json:"name"`
+		ReleaseDate          string   `json:"release_date"`
+		ReleaseDatePrecision string   `json:"release_date_precision"`
+		resumePoint          
+		Type         string `json:"type"`
+		URI          string `json:"uri"`
+		restrictions}
+ChapterSimpleObject chapterSimple
+
 
 	chapter struct {
 		AudioPreviewURL  string   `json:"audio_preview_url"`
@@ -427,7 +486,7 @@ type (
 		Type string `json:"type"`
 		URI  string `json:"uri"`
 		restrictions
-		Audiobook
+		AudiobookSimple
 	}
 	Chapters struct {
 		Chapters []chapter `json:"chapters"`
