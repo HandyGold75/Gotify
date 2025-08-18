@@ -23,7 +23,7 @@ func New(send func(method lib.HttpMethod, action string, options [][2]string, bo
 }
 
 func (s *Chapters) GetAChapter(id string) (getAChapter, error) {
-	res, err := s.Send(lib.GET, id, [][2]string{{"market", s.Market}}, []byte{})
+	res, err := s.Send(lib.GET, "chapters/"+id, [][2]string{{"market", s.Market}}, []byte{})
 	if err != nil {
 		return getAChapter{}, err
 	}
@@ -33,7 +33,7 @@ func (s *Chapters) GetAChapter(id string) (getAChapter, error) {
 }
 
 func (s *Chapters) GetSeveralChapters(ids []string) (getSeveralChapters, error) {
-	res, err := s.Send(lib.GET, "", [][2]string{{"market", s.Market}, {"ids", strings.Join(ids, ",")}}, []byte{})
+	res, err := s.Send(lib.GET, "chapters", [][2]string{{"market", s.Market}, {"ids", strings.Join(ids, ",")}}, []byte{})
 	if err != nil {
 		return getSeveralChapters{}, err
 	}

@@ -19,6 +19,7 @@ import (
 	"github.com/HandyGold75/gotify/audiobooks"
 	"github.com/HandyGold75/gotify/categories"
 	"github.com/HandyGold75/gotify/chapters"
+	"github.com/HandyGold75/gotify/episodes"
 	"github.com/HandyGold75/gotify/genres"
 	"github.com/HandyGold75/gotify/lib"
 	"github.com/HandyGold75/gotify/markets"
@@ -42,10 +43,10 @@ type (
 		Audiobooks audiobooks.Audiobooks
 		Categories categories.Categories
 		Chapters   chapters.Chapters
-		// Episodes   episodes.Episodes
-		Genres  genres.Genres
-		Markets markets.Markets
-		Player  player.Player
+		Episodes   episodes.Episodes
+		Genres     genres.Genres
+		Markets    markets.Markets
+		Player     player.Player
 		// Playlists  playlists.Playlists
 		// Search     search.Search
 		// Shows      shows.Shows
@@ -119,20 +120,20 @@ func NewGotifyPlayer(clientID, redirectURL string, scopes ...scope) *GotifyPlaye
 		cl:                  http.DefaultClient,
 	}
 
-	gp.Albums = albums.New(gp.SendAlbums)
-	gp.Artists = artists.New(gp.SendArtists)
-	gp.Audiobooks = audiobooks.New(gp.SendAudiobooks)
-	gp.Categories = categories.New(gp.SendCategories)
-	gp.Chapters = chapters.New(gp.SendChapters)
-	// gp.Episodes = episodes.New(gp.SendEpisodes)
-	gp.Genres = genres.New(gp.SendGenres)
-	gp.Markets = markets.New(gp.SendMarkets)
-	gp.Player = player.New(gp.SendPlayer)
-	// gp.Playlists = playlists.New(gp.SendPlaylists)
-	// gp.Search = search.New(gp.SendSearch)
-	// gp.Shows = shows.New(gp.SendShows)
-	// gp.Tracks = tracks.New(gp.SendTracks)
-	gp.Users = users.New(gp.SendUsers)
+	gp.Albums = albums.New(gp.Send)
+	gp.Artists = artists.New(gp.Send)
+	gp.Audiobooks = audiobooks.New(gp.Send)
+	gp.Categories = categories.New(gp.Send)
+	gp.Chapters = chapters.New(gp.Send)
+	gp.Episodes = episodes.New(gp.Send)
+	gp.Genres = genres.New(gp.Send)
+	gp.Markets = markets.New(gp.Send)
+	gp.Player = player.New(gp.Send)
+	// gp.Playlists = playlists.New(gp.Send)
+	// gp.Search = search.New(gp.Send)
+	// gp.Shows = shows.New(gp.Send)
+	// gp.Tracks = tracks.New(gp.Send)
+	gp.Users = users.New(gp.Send)
 
 	return gp
 }
@@ -226,63 +227,7 @@ func (gp *GotifyPlayer) Token() (*oauth2.Token, error) {
 	return transport.Source.Token()
 }
 
-func (gp *GotifyPlayer) SendAlbums(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendArtists(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/artists/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendAudiobooks(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendCategories(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/browse/categories/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendChapters(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/chapters/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendEpisodes(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendGenres(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendMarkets(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/markets/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendPlayer(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/player/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendPlaylists(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendSearch(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendShows(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendTracks(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) SendUsers(method lib.HttpMethod, action string, option [][2]string, body []byte) ([]byte, error) {
-	return gp.Send(method, gp.URL+"/"+action, option, body)
-}
-
-func (gp *GotifyPlayer) Send(method lib.HttpMethod, url string, options [][2]string, body []byte) ([]byte, error) {
+func (gp *GotifyPlayer) Send(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error) {
 	opts := ""
 	for _, opt := range slices.DeleteFunc(options, func(o [2]string) bool { return o[0] == "" || o[1] == "" }) {
 		if opts != "" {
@@ -294,7 +239,7 @@ func (gp *GotifyPlayer) Send(method lib.HttpMethod, url string, options [][2]str
 		opts = "?" + opts
 	}
 
-	req, err := http.NewRequest(string(method), strings.TrimSuffix(url, "/")+opts, strings.NewReader(string(body[:])))
+	req, err := http.NewRequest(string(method), strings.TrimSuffix(gp.URL+"/"+action, "/")+opts, strings.NewReader(string(body[:])))
 	if err != nil {
 		return []byte{}, err
 	}
