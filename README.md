@@ -15,7 +15,7 @@ Do you're own testing and see if the functionality you need actually works.
 Creating a GotifyPlayer for controlling a Spotify session can be done with this method:
 
 ```go
-gp := Gotify.NewGotifyPlayer(
+gp := gotify.NewGotifyPlayer(
     "ClientID",                         // Use the ClientID of you're application.
     "http://127.0.0.1"                  // Use the redirect URL of you're application.
     gotify.ScopeUserModifyPlaybackState // Add all scopes you're application will use.
@@ -42,20 +42,20 @@ This can be done using either the Spotify references (base implementation) or th
 
 The available Spotify references are:
 
-- [gp.Albums](/Albums/Albums.go)
-- [gp.Artists](/Artists/Artists.go)
-- [gp.Audiobooks](/Audiobooks/Audiobooks.go)
-- [gp.Categories](/Categories/Categories.go)
-- [gp.Chapters](/Chapters/Chapters.go)
-- [gp.Episodes](/Episodes/Episodes.go)
-- [gp.Genres](/Genres/Genres.go)
-- [gp.Markets](/Markets/Markets.go)
-- [gp.Player](/Player/Player.go)
-- [gp.Playlists](/Playlists/Playlists.go)
-- [gp.Search](/Search/Search.go)
-- [gp.Shows](/Shows/Shows.go)
-- [gp.Tracks](/Tracks/Tracks.go)
-- [gp.Users](/Users/Users.go)
+- [gp.Albums](/albums/albums.go)
+- [gp.Artists](/artists/artists.go)
+- [gp.Audiobooks](/audiobooks/audiobooks.go)
+- [gp.Categories](/categories/categories.go)
+- [gp.Chapters](/chapters/chapters.go)
+- [gp.Episodes](/episodes/episodes.go)
+- [gp.Genres](/genres/genres.go)
+- [gp.Markets](/markets/markets.go)
+- [gp.Player](/player/player.go)
+- [gp.Playlists](/playlists/playlists.go)
+- [gp.Search](/search/search.go)
+- [gp.Shows](/shows/shows.go)
+- [gp.Tracks](/tracks/tracks.go)
+- [gp.Users](/users/users.go)
 
 ## Examples
 
@@ -88,7 +88,7 @@ Some examples for controlling a Spotify session using the helpers:
 
 This project is structured as follows:
 
-- Gotify ([/Gotify.go](/Gotify.go); Entrypoint and main functions to get started)
+- Gotify ([/gotify.go](/gotify.go); Entrypoint and main functions to get started)
 - lib ([/lib/lib.go](/lib/lib.go); Contains functions and variables that are used throughout the project)
-- Spotify References ([/\*/\*.go](/Player/Player.go); Implements base as documented in [Spotify Web API](https://developer.spotify.com/documentation/web-api))
-- Sonos Reference Helpers (Ex: [/\*.go](/Player.go); Build upon the base implementation for easier use)
+- Spotify References ([/\*/\*.go](/player/player.go); Implements base as documented in [Spotify Web API](https://developer.spotify.com/documentation/web-api))
+- Sonos Reference Helpers (Ex: [/\*.go](/player.go); Build upon the base implementation for easier use)

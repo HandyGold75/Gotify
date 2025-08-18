@@ -1,7 +1,7 @@
-package Genres
+package genres
 
 import (
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 type Genres struct {

@@ -1,10 +1,10 @@
-package Chapters
+package chapters
 
 import (
 	"encoding/json"
 	"strings"
 
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 type (

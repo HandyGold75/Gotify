@@ -1,9 +1,9 @@
-package Gotify
+package gotify
 
 import (
 	"time"
 
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 func (gp *GotifyPlayer) Play() error                       { return gp.Player.StartResumePlayback(time.Duration(-1)) }

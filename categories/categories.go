@@ -1,10 +1,10 @@
-package Categories
+package categories
 
 import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 type (
@@ -15,13 +15,8 @@ type (
 
 	getSeveralBrowseCategories struct {
 		Categories struct {
-			Href     string                `json:"href"`
-			Limit    int                   `json:"limit"`
-			Next     string                `json:"next"`
-			Offset   int                   `json:"offset"`
-			Previous string                `json:"previous"`
-			Total    int                   `json:"total"`
-			Items    []lib.CategorieObject `json:"items"`
+			lib.ItemsHeaders
+			Items []lib.CategorieObject `json:"items"`
 		} `json:"categories"`
 	}
 

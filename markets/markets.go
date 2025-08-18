@@ -1,9 +1,9 @@
-package Markets
+package markets
 
 import (
 	"encoding/json"
 
-	"github.com/HandyGold75/Gotify/lib"
+	"github.com/HandyGold75/gotify/lib"
 )
 
 type Markets struct {
