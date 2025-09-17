@@ -10,7 +10,7 @@ import (
 
 type (
 	Users struct {
-		Send     func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)
+		Send     func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)
 		DeviceID string
 	}
 
@@ -36,7 +36,7 @@ type (
 	}
 )
 
-func New(send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)) Users {
+func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Users {
 	return Users{Send: send, DeviceID: ""}
 }
 
@@ -85,11 +85,11 @@ func (s *Users) GetUsersProfile(id string) (getUsersProfile, error) {
 
 // Scopes: `ScopePlaylistModifyPublic`, `ScopePlaylistModifyPrivate`
 func (s *Users) FollowPlaylist(id string, public bool) error {
-	data, err := json.Marshal(map[string]any{"public": public})
+	body, err := json.Marshal(map[string]any{"public": public})
 	if err != nil {
 		return err
 	}
-	_, err = s.Send(lib.PUT, "playlists/"+id+"/followers", [][2]string{}, data)
+	_, err = s.Send(lib.PUT, "playlists/"+id+"/followers", [][2]string{}, body)
 	return err
 }
 
@@ -112,25 +112,41 @@ func (s *Users) GetFollowedArtists(after string, limit int) (getFollowedArtists,
 
 // Scopes: `ScopeUserFollowModify`
 func (s *Users) FollowArtists(ids []string) error {
-	_, err := s.Send(lib.PUT, "me/following", [][2]string{{"type", "artist"}, {"ids", strings.Join(ids, ",")}}, []byte{})
+	body, err := json.Marshal(map[string]any{"ids": ids})
+	if err != nil {
+		return err
+	}
+	_, err = s.Send(lib.PUT, "me/following", [][2]string{{"type", "artist"}}, body)
 	return err
 }
 
 // Scopes: `ScopeUserFollowModify`
 func (s *Users) FollowUsers(ids []string) error {
-	_, err := s.Send(lib.PUT, "me/following", [][2]string{{"type", "user"}, {"ids", strings.Join(ids, ",")}}, []byte{})
+	body, err := json.Marshal(map[string]any{"ids": ids})
+	if err != nil {
+		return err
+	}
+	_, err = s.Send(lib.PUT, "me/following", [][2]string{{"type", "user"}}, body)
 	return err
 }
 
 // Scopes: `ScopeUserFollowModify`
 func (s *Users) UnfollowArtists(ids []string) error {
-	_, err := s.Send(lib.DELETE, "me/following", [][2]string{{"type", "artist"}, {"ids", strings.Join(ids, ",")}}, []byte{})
+	body, err := json.Marshal(map[string]any{"ids": ids})
+	if err != nil {
+		return err
+	}
+	_, err = s.Send(lib.DELETE, "me/following", [][2]string{{"type", "artist"}}, body)
 	return err
 }
 
 // Scopes: `ScopeUserFollowModify`
 func (s *Users) UnfollowUsers(ids []string) error {
-	_, err := s.Send(lib.DELETE, "me/following", [][2]string{{"type", "user"}, {"ids", strings.Join(ids, ",")}}, []byte{})
+	body, err := json.Marshal(map[string]any{"ids": ids})
+	if err != nil {
+		return err
+	}
+	_, err = s.Send(lib.DELETE, "me/following", [][2]string{{"type", "user"}}, body)
 	return err
 }
 

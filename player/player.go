@@ -10,7 +10,7 @@ import (
 
 type (
 	Player struct {
-		Send     func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)
+		Send     func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)
 		DeviceID string
 		Market   string // An ISO 3166-1 alpha-2 country code, https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 	}
@@ -47,7 +47,7 @@ type (
 	}
 )
 
-func New(send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)) Player {
+func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Player {
 	return Player{
 		Send:     send,
 		DeviceID: "", Market: "",
@@ -69,11 +69,11 @@ func (s *Player) GetPlaybackState() (getPlaybackState, error) {
 //
 // Scopes: `ScopeUserModifyPlaybackState`
 func (s *Player) TransferPlayback(deviceID string, play bool) error {
-	data, err := json.Marshal(map[string]any{"device_ids": deviceID, "play": play})
+	body, err := json.Marshal(map[string]any{"device_ids": deviceID, "play": play})
 	if err != nil {
 		return err
 	}
-	_, err = s.Send(lib.PUT, "player", [][2]string{}, data)
+	_, err = s.Send(lib.PUT, "player", [][2]string{}, body)
 	return err
 }
 
@@ -109,12 +109,11 @@ func (s *Player) StartResumePlayback(position time.Duration) error {
 	if time.Duration(0) > position {
 		value = strconv.Itoa(int(position.Milliseconds()))
 	}
-
-	data, err := json.Marshal(map[string]any{"position_ms": value})
+	body, err := json.Marshal(map[string]any{"position_ms": value})
 	if err != nil {
 		return err
 	}
-	_, err = s.Send(lib.PUT, "player/play", [][2]string{{"device_id", s.DeviceID}}, data)
+	_, err = s.Send(lib.PUT, "player/play", [][2]string{{"device_id", s.DeviceID}}, body)
 	return err
 }
 
@@ -133,12 +132,12 @@ func (s *Player) StartResumePlayback(position time.Duration) error {
 //	    },
 //	    "position_ms": 0
 //	}
-func (s *Player) StartResumePlaybackRaw(body map[string]any) error {
-	data, err := json.Marshal(body)
+func (s *Player) StartResumePlaybackRaw(req map[string]any) error {
+	body, err := json.Marshal(req)
 	if err != nil {
 		return err
 	}
-	_, err = s.Send(lib.PUT, "player/play", [][2]string{{"device_id", s.DeviceID}}, data)
+	_, err = s.Send(lib.PUT, "player/play", [][2]string{{"device_id", s.DeviceID}}, body)
 	return err
 }
 
@@ -232,7 +231,7 @@ func (s *Player) GetTheUsersQueue() (getTheUsersQueue, error) {
 // Requires premium.
 //
 // Scopes: `ScopeUserModifyPlaybackState`
-func (s *Player) AddItemToPlaybackQueue(uri string) error {
-	_, err := s.Send(lib.POST, "player", [][2]string{{"device_id", s.DeviceID}, {"uri", uri}}, []byte{})
+func (s *Player) AddItemToPlaybackQueue(uri lib.URI) error {
+	_, err := s.Send(lib.POST, "player", [][2]string{{"device_id", s.DeviceID}, {"uri", string(uri)}}, []byte{})
 	return err
 }
