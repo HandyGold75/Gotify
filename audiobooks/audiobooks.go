@@ -10,7 +10,7 @@ import (
 
 type (
 	Audiobooks struct {
-		Send   func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)
+		Send   func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)
 		Market string // An ISO 3166-1 alpha-2 country code, https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 	}
 
@@ -29,7 +29,7 @@ type (
 	}
 )
 
-func New(send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)) Audiobooks {
+func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Audiobooks {
 	return Audiobooks{Send: send, Market: ""}
 }
 

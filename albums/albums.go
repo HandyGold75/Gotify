@@ -10,7 +10,7 @@ import (
 
 type (
 	Albums struct {
-		Send   func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)
+		Send   func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)
 		Market string // An ISO 3166-1 alpha-2 country code, https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 	}
 
@@ -39,7 +39,7 @@ type (
 	}
 )
 
-func New(send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)) Albums {
+func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Albums {
 	return Albums{Send: send, Market: ""}
 }
 
@@ -86,13 +86,21 @@ func (s *Albums) GetUsersSavedAlbums(limit, offset int) (getUsersSavedAlbums, er
 
 // Scopes: `ScopeUserLibraryModify`
 func (s *Albums) SaveAlbumsForCurrentUser(ids []string) error {
-	_, err := s.Send(lib.PUT, "me/albums", [][2]string{{"ids", strings.Join(ids, ",")}}, []byte{})
+	body, err := json.Marshal(map[string]any{"ids": ids})
+	if err != nil {
+		return err
+	}
+	_, err = s.Send(lib.PUT, "me/albums", [][2]string{}, body)
 	return err
 }
 
 // Scopes: `ScopeUserLibraryModify`
 func (s *Albums) RemoveUsersSavedAlbums(ids []string) error {
-	_, err := s.Send(lib.DELETE, "me/albums", [][2]string{{"ids", strings.Join(ids, ",")}}, []byte{})
+	body, err := json.Marshal(map[string]any{"ids": ids})
+	if err != nil {
+		return err
+	}
+	_, err = s.Send(lib.DELETE, "me/albums", [][2]string{}, body)
 	return err
 }
 

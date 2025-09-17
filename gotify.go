@@ -20,10 +20,10 @@ import (
 	"github.com/HandyGold75/gotify/categories"
 	"github.com/HandyGold75/gotify/chapters"
 	"github.com/HandyGold75/gotify/episodes"
-	"github.com/HandyGold75/gotify/genres"
 	"github.com/HandyGold75/gotify/lib"
 	"github.com/HandyGold75/gotify/markets"
 	"github.com/HandyGold75/gotify/player"
+	"github.com/HandyGold75/gotify/playlists"
 	"github.com/HandyGold75/gotify/users"
 	"golang.org/x/oauth2"
 )
@@ -44,10 +44,9 @@ type (
 		Categories categories.Categories
 		Chapters   chapters.Chapters
 		Episodes   episodes.Episodes
-		Genres     genres.Genres
 		Markets    markets.Markets
 		Player     player.Player
-		// Playlists  playlists.Playlists
+		Playlists  playlists.Playlists
 		// Search     search.Search
 		// Shows      shows.Shows
 		// Tracks     tracks.Tracks
@@ -126,10 +125,9 @@ func NewGotifyPlayer(clientID, redirectURL string, scopes ...scope) *GotifyPlaye
 	gp.Categories = categories.New(gp.Send)
 	gp.Chapters = chapters.New(gp.Send)
 	gp.Episodes = episodes.New(gp.Send)
-	gp.Genres = genres.New(gp.Send)
 	gp.Markets = markets.New(gp.Send)
 	gp.Player = player.New(gp.Send)
-	// gp.Playlists = playlists.New(gp.Send)
+	gp.Playlists = playlists.New(gp.Send)
 	// gp.Search = search.New(gp.Send)
 	// gp.Shows = shows.New(gp.Send)
 	// gp.Tracks = tracks.New(gp.Send)
@@ -209,7 +207,7 @@ func (gp *GotifyPlayer) AuthenticateHTTP(port uint16) error {
 
 // Authenticate using a token.
 func (gp *GotifyPlayer) AuthenticateToken(token *oauth2.Token) error {
-	token.Expiry.Add(-(time.Hour * 2))
+	token.Expiry = token.Expiry.Add(-(time.Hour * 2))
 	token, err := gp.authCfg.TokenSource(context.Background(), token).Token()
 	if err != nil {
 		return err
@@ -227,7 +225,7 @@ func (gp *GotifyPlayer) Token() (*oauth2.Token, error) {
 	return transport.Source.Token()
 }
 
-func (gp *GotifyPlayer) Send(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error) {
+func (gp *GotifyPlayer) Send(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error) {
 	opts := ""
 	for _, opt := range slices.DeleteFunc(options, func(o [2]string) bool { return o[0] == "" || o[1] == "" }) {
 		if opts != "" {
@@ -244,8 +242,9 @@ func (gp *GotifyPlayer) Send(method lib.HttpMethod, action string, options [][2]
 		return []byte{}, err
 	}
 	if len(body) > 0 {
-		req.Header.Add("Content-Type", "application/json")
+		req.Header.Add("Content-Type", http.DetectContentType(body))
 	}
+
 	resp, err := gp.cl.Do(req)
 	if err != nil {
 		return []byte{}, err

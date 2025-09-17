@@ -9,7 +9,7 @@ import (
 
 type (
 	Categories struct {
-		Send   func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)
+		Send   func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)
 		Locale string // an ISO 639-1 language code, http://en.wikipedia.org/wiki/ISO_639-1 and an ISO 3166-1 alpha-2 country code, http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 joined by an underscore.
 	}
 
@@ -23,7 +23,7 @@ type (
 	getSingleBrowseCategory lib.CategorieObject
 )
 
-func New(send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)) Categories {
+func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Categories {
 	return Categories{Send: send, Locale: ""}
 }
 

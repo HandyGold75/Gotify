@@ -7,10 +7,10 @@ import (
 )
 
 type Markets struct {
-	Send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)
+	Send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)
 }
 
-func New(send func(method lib.HttpMethod, action string, options [][2]string, body []byte) ([]byte, error)) Markets {
+func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Markets {
 	return Markets{Send: send}
 }
 

@@ -5,21 +5,19 @@ import (
 )
 
 type (
-	HttpMethod  string
+	HTTPMethod  string
 	RepeatMode  string
-	TopItemType string
 	TimeRange   string
 	AlbumGroup  string
+	URIResource string
 )
 
 const (
-	GET    HttpMethod = "GET"
-	PUT    HttpMethod = "PUT"
-	POST   HttpMethod = "POST"
-	DELETE HttpMethod = "DELETE"
-)
+	GET    HTTPMethod = "GET"
+	PUT    HTTPMethod = "PUT"
+	POST   HTTPMethod = "POST"
+	DELETE HTTPMethod = "DELETE"
 
-const (
 	RepeatTrack   RepeatMode = "track"   // repeat the current track.
 	RepeatContext RepeatMode = "context" // repeat the current context.
 	RepeatOff     RepeatMode = "off"     // repeat off.
@@ -32,10 +30,25 @@ const (
 	AlbumGroupSingle      AlbumGroup = "single"
 	AlbumGroupApearsOn    AlbumGroup = "apears_on"
 	AlbumGroupCompilation AlbumGroup = "compilation"
+
+	URIResourceTrack  URIResource = "track"
+	URIResourceArtist URIResource = "artist"
+	URIResourceAlbum  URIResource = "album"
+	URIResourcePlaylist URIResource = "playlist"
+	URIResourceShow URIResource = "show"
+	URIResourceEpisode URIResource = "episode"
+	URIResourceUser URIResource = "user"
+	URIResourceAudiobook URIResource = "audiobook"
 )
 
 var Errors = struct{ UnexpectedResponse error }{
 	UnexpectedResponse: errors.New("unexpected response"),
+}
+
+type URI string
+
+func NewURI(resource URIResource, id string) URI {
+	return URI("spotify:" + string(resource) + ":" + id)
 }
 
 type (
