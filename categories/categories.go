@@ -16,11 +16,11 @@ type (
 	getSeveralBrowseCategories struct {
 		Categories struct {
 			lib.ItemsHeaders
-			Items []lib.CategorieObject `json:"items"`
+			Items []lib.Categorie `json:"items"`
 		} `json:"categories"`
 	}
 
-	getSingleBrowseCategory lib.CategorieObject
+	getSingleBrowseCategory lib.Categorie
 )
 
 func New(send func(method lib.HTTPMethod, action string, options [][2]string, body []byte) ([]byte, error)) Categories {

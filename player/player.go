@@ -16,19 +16,24 @@ type (
 	}
 
 	getPlaybackState struct {
-		lib.Device
-		RepeatState  string `json:"repeat_state"`
-		ShuffleState bool   `json:"shuffle_state"`
+		Device       lib.Device `json:"device"`
+		RepeatState  string     `json:"repeat_state"`
+		ShuffleState bool       `json:"shuffle_state"`
 		lib.Context
-		Timestamp            int                       `json:"timestamp"`
-		ProgressMs           int                       `json:"progress_ms"`
-		IsPlaying            bool                      `json:"is_playing"`
-		Item                 lib.TrackAndEpisodeObject `json:"item"`
-		CurrentlyPlayingType string                    `json:"currently_playing_type"`
-		lib.Actions
+		Timestamp  int  `json:"timestamp"`
+		ProgressMs int  `json:"progress_ms"`
+		IsPlaying  bool `json:"is_playing"`
+		Item       struct {
+			lib.TrackObject
+			lib.EpisodeObject
+		} `json:"item"`
+		CurrentlyPlayingType string      `json:"currently_playing_type"`
+		Actions              lib.Actions `json:"actions"`
 	}
 
-	getAvailableDevices lib.Devices
+	getAvailableDevices struct {
+		Devices []lib.Device `json:"devices"`
+	}
 
 	getCurrentlyPlayingTrack getPlaybackState
 
@@ -42,8 +47,14 @@ type (
 	}
 
 	getTheUsersQueue struct {
-		CurrentlyPlaying lib.TrackAndEpisodeObject   `json:"currently_playing"`
-		Queue            []lib.TrackAndEpisodeObject `json:"queue"`
+		CurrentlyPlaying struct {
+			lib.TrackObject
+			lib.EpisodeObject
+		} `json:"currently_playing"`
+		Queue []struct {
+			lib.TrackObject
+			lib.EpisodeObject
+		} `json:"queue"`
 	}
 )
 
