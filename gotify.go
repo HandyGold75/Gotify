@@ -24,6 +24,7 @@ import (
 	"github.com/HandyGold75/gotify/markets"
 	"github.com/HandyGold75/gotify/player"
 	"github.com/HandyGold75/gotify/playlists"
+	"github.com/HandyGold75/gotify/search"
 	"github.com/HandyGold75/gotify/users"
 	"golang.org/x/oauth2"
 )
@@ -47,7 +48,7 @@ type (
 		Markets    markets.Markets
 		Player     player.Player
 		Playlists  playlists.Playlists
-		// Search     search.Search
+		Search     search.Search
 		// Shows      shows.Shows
 		// Tracks     tracks.Tracks
 		Users users.Users
@@ -128,7 +129,7 @@ func NewGotifyPlayer(clientID, redirectURL string, scopes ...scope) *GotifyPlaye
 	gp.Markets = markets.New(gp.Send)
 	gp.Player = player.New(gp.Send)
 	gp.Playlists = playlists.New(gp.Send)
-	// gp.Search = search.New(gp.Send)
+	gp.Search = search.New(gp.Send)
 	// gp.Shows = shows.New(gp.Send)
 	// gp.Tracks = tracks.New(gp.Send)
 	gp.Users = users.New(gp.Send)

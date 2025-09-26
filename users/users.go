@@ -14,7 +14,7 @@ type (
 		DeviceID string
 	}
 
-	getCurrentUsersProfile lib.ProfileObject
+	getCurrentUsersProfile lib.Profile
 
 	getUsersTopArtists struct {
 		lib.ItemsHeaders
@@ -26,7 +26,7 @@ type (
 		Items []lib.TrackObject `json:"items"`
 	}
 
-	getUsersProfile lib.ProfilePublicObject
+	getUsersProfile lib.ProfilePublic
 
 	getFollowedArtists struct {
 		Artists struct {
