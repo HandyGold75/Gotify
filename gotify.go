@@ -25,6 +25,7 @@ import (
 	"github.com/HandyGold75/gotify/player"
 	"github.com/HandyGold75/gotify/playlists"
 	"github.com/HandyGold75/gotify/search"
+	"github.com/HandyGold75/gotify/tracks"
 	"github.com/HandyGold75/gotify/users"
 	"golang.org/x/oauth2"
 )
@@ -50,8 +51,8 @@ type (
 		Playlists  playlists.Playlists
 		Search     search.Search
 		// Shows      shows.Shows
-		// Tracks     tracks.Tracks
-		Users users.Users
+		Tracks tracks.Tracks
+		Users  users.Users
 	}
 
 	errorResponse struct {
@@ -131,7 +132,7 @@ func NewGotifyPlayer(clientID, redirectURL string, scopes ...scope) *GotifyPlaye
 	gp.Playlists = playlists.New(gp.Send)
 	gp.Search = search.New(gp.Send)
 	// gp.Shows = shows.New(gp.Send)
-	// gp.Tracks = tracks.New(gp.Send)
+	gp.Tracks = tracks.New(gp.Send)
 	gp.Users = users.New(gp.Send)
 
 	return gp

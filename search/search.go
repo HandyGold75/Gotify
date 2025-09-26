@@ -11,31 +11,31 @@ import (
 type searchForItem struct {
 	Tracks struct {
 		lib.ItemsHeaders
-		Items    []lib.TrackObject `json:"items"`
+		Items []lib.TrackObject `json:"items"`
 	} `json:"tracks"`
 	Artists struct {
 		lib.ItemsHeaders
-		Items    []lib.ArtistObject `json:"items"`
+		Items []lib.ArtistObject `json:"items"`
 	} `json:"artists"`
 	Albums struct {
 		lib.ItemsHeaders
-		Items    []lib.AlbumSimpleObject `json:"items"`
+		Items []lib.AlbumSimpleObject `json:"items"`
 	} `json:"albums"`
 	Playlists struct {
 		lib.ItemsHeaders
-		Items    []struct lib.PlaylistSimpleObject `json:"items"`
+		Items []lib.PlaylistSimpleObject `json:"items"`
 	} `json:"playlists"`
 	Shows struct {
 		lib.ItemsHeaders
-		Items    []lib.ShowSimpleObject `json:"items"`
+		Items []lib.ShowSimpleObject `json:"items"`
 	} `json:"shows"`
 	Episodes struct {
 		lib.ItemsHeaders
-		Items    []lib.EpisodeSimpleObject `json:"items"`
+		Items []lib.EpisodeSimpleObject `json:"items"`
 	} `json:"episodes"`
 	Audiobooks struct {
 		lib.ItemsHeaders
-		Items    []lib.AudiobookSimpleObject `json:"items"`
+		Items []lib.AudiobookSimpleObject `json:"items"`
 	} `json:"audiobooks"`
 }
 
@@ -70,7 +70,7 @@ func (s *Search) SearchForItemExternal(query string, typ []lib.URIResource, limi
 	for _, t := range typ {
 		typs = append(typs, string(t))
 	}
-	res, err := s.Send(lib.GET, "search", [][2]string{{"query", query}, {"type", strings.Join(typs, ",")}, {"market", s.Market}, {"limit", strconv.Itoa(max(1, min(50, limit)))}, {"offset", strconv.Itoa(max(0, offset))}, {"include_external": "audio"}}, []byte{})
+	res, err := s.Send(lib.GET, "search", [][2]string{{"query", query}, {"type", strings.Join(typs, ",")}, {"market", s.Market}, {"limit", strconv.Itoa(max(1, min(50, limit)))}, {"offset", strconv.Itoa(max(0, offset))}, {"include_external", "audio"}}, []byte{})
 	if err != nil {
 		return searchForItem{}, err
 	}
