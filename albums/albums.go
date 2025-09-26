@@ -107,6 +107,9 @@ func (s *Albums) RemoveUsersSavedAlbums(ids []string) error {
 // Scopes: `ScopeUserLibraryRead`
 func (s *Albums) CheckUsersSavedAlbums(ids []string) ([]bool, error) {
 	res, err := s.Send(lib.GET, "me/albums/contains", [][2]string{{"ids", strings.Join(ids, ",")}}, []byte{})
+	if err != nil {
+		return []bool{}, err
+	}
 	data := []bool{}
 	err = json.Unmarshal(res, &data)
 	return data, err
